@@ -48,7 +48,7 @@ export const AdminManagement: React.FC = () => {
   const fetchAdmins = async () => {
     try {
       setIsLoading(true);
-      const res = await fetch('http://localhost:5000/api/v1/admins');
+      const res = await fetch('http://localhost:3000/api/v1/admins');
       const json = await res.json();
       if (json.success && json.data && json.data.length > 0) {
         setAdmins(json.data);
@@ -127,7 +127,7 @@ export const AdminManagement: React.FC = () => {
     setAdmins(updatedList);
 
     try {
-      await fetch(`http://localhost:5000/api/v1/admins/${deleteTransferAdmin.id}`, { method: 'DELETE' });
+      await fetch(`http://localhost:3000/api/v1/admins/${deleteTransferAdmin.id}`, { method: 'DELETE' });
     } catch (err) {}
 
     const successorInfo = successorAdm ? `Reassigned admin permissions & history to ${successorAdm.name}` : `Archived admin logs`;
@@ -155,7 +155,7 @@ export const AdminManagement: React.FC = () => {
       setAdmins(updatedAdmins);
 
       try {
-        await fetch(`http://localhost:5000/api/v1/admins/${editingAdmin.id}/permissions`, {
+        await fetch(`http://localhost:3000/api/v1/admins/${editingAdmin.id}/permissions`, {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ permissions: selectedPermissions })
@@ -189,7 +189,7 @@ export const AdminManagement: React.FC = () => {
       setAdmins(updatedList);
 
       try {
-        await fetch('http://localhost:5000/api/v1/admins', {
+        await fetch('http://localhost:3000/api/v1/admins', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -227,7 +227,7 @@ export const AdminManagement: React.FC = () => {
     setAdmins(updatedList);
 
     try {
-      await fetch(`http://localhost:5000/api/v1/admins/${id}/status`, {
+      await fetch(`http://localhost:3000/api/v1/admins/${id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })

@@ -85,7 +85,7 @@ export const OrgSuperAdminOffers: React.FC = () => {
     const candidateName = targetOffer?.candidateName || id;
 
     try {
-      await fetch(`http://localhost:5000/api/v1/offers/${id}/status`, {
+      await fetch(`http://localhost:3000/api/v1/offers/${id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -126,7 +126,7 @@ export const OrgSuperAdminOffers: React.FC = () => {
     };
 
     try {
-      await fetch('http://localhost:5000/api/v1/offers', {
+      await fetch('http://localhost:3000/api/v1/offers', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newOfferPayload)

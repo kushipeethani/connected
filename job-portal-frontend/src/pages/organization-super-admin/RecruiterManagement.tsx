@@ -228,7 +228,7 @@ export const RecruiterManagement: React.FC = () => {
     };
 
     try {
-      const res = await fetch('http://localhost:5000/api/v1/recruiters', {
+      const res = await fetch('http://localhost:3000/api/v1/recruiters', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -350,7 +350,7 @@ export const RecruiterManagement: React.FC = () => {
     setRecruiters(updatedStore);
 
     try {
-      await fetch(`http://localhost:5000/api/v1/recruiters/${deleteTransferRecruiter.id}`, { method: 'DELETE' });
+      await fetch(`http://localhost:3000/api/v1/recruiters/${deleteTransferRecruiter.id}`, { method: 'DELETE' });
     } catch (err) {}
 
     const successorInfoText = successorRec ? `Reassigned ${assignedJobs.length} jobs and ${tokenAmountToTransfer} credits to ${successorRec.name}` : `Returned ${tokenAmountToTransfer} credits to pool`;
@@ -372,7 +372,7 @@ export const RecruiterManagement: React.FC = () => {
     const newStatus = rec.status === 'ACTIVE' ? 'SUSPENDED' : 'ACTIVE';
 
     try {
-      await fetch(`http://localhost:5000/api/v1/recruiters/${rec.id}/status`, {
+      await fetch(`http://localhost:3000/api/v1/recruiters/${rec.id}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })
@@ -422,7 +422,7 @@ export const RecruiterManagement: React.FC = () => {
     setCreditModalUser(null);
 
     try {
-      await fetch('http://localhost:5000/api/v1/credits/allocate', {
+      await fetch('http://localhost:3000/api/v1/credits/allocate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
