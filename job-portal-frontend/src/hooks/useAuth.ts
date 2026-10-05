@@ -44,8 +44,8 @@ export function useAuth() {
         throw new Error('Access Denied: Your Admin account has been suspended by the Organization Super Admin.');
       }
 
-      const expectedPass = foundAdmin.password || 'Admin@2026';
-      if (pass && pass !== expectedPass && pass !== 'Demo@1234' && pass !== 'Admin@2026') {
+      const expectedPass = (foundAdmin.password || 'Admin@2026').trim();
+      if (pass && pass.trim() !== expectedPass) {
         throw new Error('Invalid password for this Admin account.');
       }
 
@@ -78,9 +78,8 @@ export function useAuth() {
         throw new Error('Access Denied: Your account has been suspended by the Organization Super Admin.');
       }
 
-      const expectedPass = foundRecruiter.password || 'Recruiter@123';
-      const isPassValid = !pass || pass === expectedPass || pass === 'Recruiter@123' || pass === 'Clyptus@2026' || pass === 'Demo@1234' || pass === 'Admin@2026';
-      if (!isPassValid) {
+      const expectedPass = (foundRecruiter.password || 'Recruiter@123').trim();
+      if (pass && pass.trim() !== expectedPass) {
         throw new Error('Invalid password for this recruiter account.');
       }
 
