@@ -62,12 +62,14 @@ export const RecruiterManagement: React.FC = () => {
     phone: string;
     recruiterRole: string;
     status: 'ACTIVE' | 'SUSPENDED';
+    password?: string;
   }>({
     name: '',
     email: '',
     phone: '',
     recruiterRole: 'Tech Recruiter',
-    status: 'ACTIVE'
+    status: 'ACTIVE',
+    password: ''
   });
 
   // Newly Created Credentials Display State
@@ -154,7 +156,8 @@ export const RecruiterManagement: React.FC = () => {
       email: rec.email,
       phone: rec.phone || '',
       recruiterRole: rec.recruiterRole || 'Tech Recruiter',
-      status: (rec.status === 'SUSPENDED' ? 'SUSPENDED' : 'ACTIVE')
+      status: (rec.status === 'SUSPENDED' ? 'SUSPENDED' : 'ACTIVE'),
+      password: ''
     });
   };
 
@@ -162,15 +165,28 @@ export const RecruiterManagement: React.FC = () => {
     e.preventDefault();
     if (!editModalUser) return;
 
+    const updates: {
+      name: string;
+      email: string;
+      phone: string;
+      recruiterRole: string;
+      status: 'ACTIVE' | 'SUSPENDED';
+      password?: string;
+    } = {
+      name: editForm.name,
+      email: editForm.email,
+      phone: editForm.phone,
+      recruiterRole: editForm.recruiterRole,
+      status: editForm.status
+    };
+
+    if (editForm.password && editForm.password.trim() !== '') {
+      updates.password = editForm.password.trim();
+    }
+
     const updated = updateRecruiterDetails(
       editModalUser.id,
-      {
-        name: editForm.name,
-        email: editForm.email,
-        phone: editForm.phone,
-        recruiterRole: editForm.recruiterRole,
-        status: editForm.status
-      },
+      updates,
       'Organization Super Admin'
     );
 
@@ -889,16 +905,33 @@ export const RecruiterManagement: React.FC = () => {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">Account Status</label>
-                <select
-                  value={editForm.status}
-                  onChange={(e) => setEditForm({ ...editForm, status: e.target.value as 'ACTIVE' | 'SUSPENDED' })}
-                  className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 bg-white focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
-                >
-                  <option value="ACTIVE">ACTIVE (Granted Login Access)</option>
-                  <option value="SUSPENDED">SUSPENDED (Access Blocked)</option>
-                </select>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">Account Status</label>
+                  <select
+                    value={editForm.status}
+                    onChange={(e) => setEditForm({ ...editForm, status: e.target.value as 'ACTIVE' | 'SUSPENDED' })}
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-bold text-slate-800 bg-white focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
+                  >
+                    <option value="ACTIVE">ACTIVE (Granted Access)</option>
+                    <option value="SUSPENDED">SUSPENDED (Blocked)</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    Change Password <span className="font-normal text-slate-400 text-[10px]">(Optional)</span>
+                  </label>
+                  <input
+                    type="password"
+                    autoComplete="new-password"
+                    name="edit_recruiter_account_password"
+                    placeholder="Leave blank to keep current"
+                    value={editForm.password || ''}
+                    onChange={(e) => setEditForm({ ...editForm, password: e.target.value })}
+                    className="w-full px-3.5 py-2 rounded-xl border border-slate-300 text-xs font-mono focus:ring-2 focus:ring-brand-blue-500 focus:outline-none"
+                  />
+                </div>
               </div>
 
               <div className="flex justify-end gap-2 pt-2 border-t border-slate-100">

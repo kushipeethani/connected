@@ -256,7 +256,7 @@ export const Members: React.FC = () => {
           ...r,
           name: editModalRecruiter.name,
           email: editModalRecruiter.email,
-          password: editModalRecruiter.password || r.password || 'Recruiter@123',
+          password: (editModalRecruiter.password && editModalRecruiter.password.trim() !== '') ? editModalRecruiter.password.trim() : r.password,
           phone: editModalRecruiter.phone || r.phone,
           recruiterRole: editModalRecruiter.department || r.recruiterRole,
         };
@@ -894,13 +894,17 @@ export const Members: React.FC = () => {
               </div>
 
               <div>
-                <label className="block font-bold text-gray-700 mb-1">Assigned Password</label>
+                <label className="block font-bold text-gray-700 mb-1">
+                  Change Account Password <span className="font-normal text-gray-400 text-[10px]">(Leave blank to keep current)</span>
+                </label>
                 <input
-                  type="text"
+                  type="password"
+                  autoComplete="new-password"
+                  name="edit_recruiter_password"
                   value={editModalRecruiter.password || ''}
                   onChange={(e) => setEditModalRecruiter({ ...editModalRecruiter, password: e.target.value })}
-                  className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl outline-none font-mono font-bold text-[#0052CC]"
-                  placeholder="Enter login password"
+                  className="w-full px-3.5 py-2.5 border border-gray-200 rounded-xl outline-none font-mono text-xs font-bold text-gray-900 focus:ring-2 focus:ring-[#0052CC]"
+                  placeholder="Enter new password (optional)"
                 />
               </div>
 

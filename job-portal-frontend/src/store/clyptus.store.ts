@@ -157,7 +157,7 @@ export const INITIAL_ONBOARDING_STEPS: OnboardingStep[] = [
 
 export const updateRecruiterDetails = (
   recruiterId: string,
-  updates: { name?: string; email?: string; phone?: string; recruiterRole?: string; status?: UserStatus },
+  updates: { name?: string; email?: string; phone?: string; recruiterRole?: string; status?: UserStatus; password?: string },
   actorName: string = 'Admin'
 ): RecruiterUser[] => {
   const recruiters = getStoreRecruiters();
@@ -171,7 +171,7 @@ export const updateRecruiterDetails = (
         'RecruiterUser',
         rec.id,
         'USER',
-        `Updated recruiter ${rec.name} (${rec.id}). Status: ${newRec.status}, Role: ${newRec.recruiterRole || 'Tech Recruiter'}, Phone: ${newRec.phone || 'N/A'}.`
+        `Updated recruiter ${rec.name} (${rec.id}). Status: ${newRec.status}, Role: ${newRec.recruiterRole || 'Tech Recruiter'}, Phone: ${newRec.phone || 'N/A'}.${updates.password ? ' Password updated.' : ''}`
       );
       return newRec;
     }
